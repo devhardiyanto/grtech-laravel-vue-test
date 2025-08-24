@@ -4,9 +4,13 @@ import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import { BookOpen, Folder, LayoutGrid, Building2, Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+
+const page = usePage();
+const user = page.props.auth.user;
+const isAdmin = user?.role === 'admin';
 
 const mainNavItems: NavItem[] = [
     {
@@ -14,6 +18,18 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    ...(isAdmin ? [
+        {
+            title: 'Companies',
+            href: '/companies',
+            icon: Building2,
+        },
+        {
+            title: 'Employees',
+            href: '/employees',
+            icon: Users,
+        },
+    ] : []),
 ];
 
 const footerNavItems: NavItem[] = [
