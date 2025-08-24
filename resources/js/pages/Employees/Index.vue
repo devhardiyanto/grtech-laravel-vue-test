@@ -41,7 +41,7 @@
             >
                 <template #bodyCell="{ column, record, index }">
                     <template v-if="column.key === 'index'">
-                        {{ (pagination.current - 1) * pagination.pageSize + index + 1 }}
+                        {{ ((pagination.current || 1) - 1) * (pagination.pageSize || 10) + index + 1 }}
                     </template>
                     <template v-else-if="column.key === 'full_name'">
                         {{ record.full_name }}
