@@ -30,8 +30,15 @@ class EmployeeController extends Controller
             ->withQueryString();
 
         return Inertia::render('Employees/Index', [
-            'employees' => EmployeeResource::collection($employees),
-            'companies' => CompanyResource::collection(Company::all()),
+            'employees' => EmployeeResource::collection($employees)->response()->getData(true),
+            'companies' => Company::all()->map(function ($company) {
+                return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'email' => $company->email,
+                    'website' => $company->website,
+                ];
+            }),
             'filters' => $request->only(['search', 'company_id']),
         ]);
     }
@@ -39,7 +46,14 @@ class EmployeeController extends Controller
     public function create()
     {
         return Inertia::render('Employees/Create', [
-            'companies' => CompanyResource::collection(Company::all()),
+            'companies' => Company::all()->map(function ($company) {
+                return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'email' => $company->email,
+                    'website' => $company->website,
+                ];
+            }),
         ]);
     }
 
@@ -73,7 +87,14 @@ class EmployeeController extends Controller
     {
         return Inertia::render('Employees/Edit', [
             'employee' => new EmployeeResource($employee),
-            'companies' => CompanyResource::collection(Company::all()),
+            'companies' => Company::all()->map(function ($company) {
+                return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'email' => $company->email,
+                    'website' => $company->website,
+                ];
+            }),
         ]);
     }
 

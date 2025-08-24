@@ -24,7 +24,7 @@ class CompanyController extends Controller
             ->withQueryString();
 
         return Inertia::render('Companies/Index', [
-            'companies' => CompanyResource::collection($companies),
+            'companies' => CompanyResource::collection($companies)->response()->getData(true),
             'filters' => $request->only('search'),
         ]);
     }

@@ -241,6 +241,8 @@ const props = defineProps<{
         last_page: number;
         per_page: number;
         total: number;
+        links?: any;
+        meta?: any;
     };
     companies: Company[];
     filters: {
@@ -248,6 +250,10 @@ const props = defineProps<{
         company_id?: number;
     };
 }>();
+
+// Debug: Log the data to check structure
+console.log('Employees data:', props.employees);
+console.log('Companies data:', props.companies);
 
 const page = usePage();
 const loading = ref(false);
